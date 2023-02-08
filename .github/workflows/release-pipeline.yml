@@ -1,0 +1,33 @@
+name: Release CI/CD Pipeline
+run-name: ${{ github.actor }} triggered release
+on:
+  push:
+    branches:
+      - 'releases/**'
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Set up JDK 19
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '19'
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Compile test and source code
+        run: mvn -B clean compile test-compile
+      - name: Run Unit tests
+        run: mvn surefire:test
+      - name: Run Integration tests
+        run: mvn failsafe:integration-test
+      - name: Deploy
+        run: echo "Deployed"
+      
