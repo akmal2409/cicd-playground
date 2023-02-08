@@ -33,6 +33,6 @@ class HealthControllerIT {
     mockMvc.perform(get("/health")
                         .accept("application/json"))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.status", is("HEALTHYZ")));
+        .andExpect(jsonPath("$.status", is("HEALTHY")));
   }
 }
