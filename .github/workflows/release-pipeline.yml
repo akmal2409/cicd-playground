@@ -18,7 +18,7 @@ jobs:
           java-version: '19'
           cache: maven
       - name: Package the artefact
-        run: mvn install -DskipTests
+        run: mvn -B package -DskipTests --file pom.xml
       - name: Run Unit tests
         run: mvn surefire:test
       - name: Run Integration tests
