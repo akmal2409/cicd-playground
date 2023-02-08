@@ -23,5 +23,7 @@ jobs:
         run: mvn surefire:test
       - name: Run Integration tests
         run: mvn failsafe:integration-test failsafe:verify
+      - name: Deploy
+        run: echo "Deployed"
 
       
