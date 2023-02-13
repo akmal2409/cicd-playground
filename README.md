@@ -1,0 +1,1 @@
+![CI/CD](https://github.com/akmal2409/cicd-playground/actions/workflows/release-pipeline.yml/badge.svg)
