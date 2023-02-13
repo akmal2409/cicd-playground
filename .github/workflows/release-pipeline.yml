@@ -8,7 +8,7 @@ on:
 env:
   REGISTRY: 'ghcr.io'
   IMAGE_NAME: ${{ github.repository }}
-  BACKEND_WORK_DIR: './backend'
+  BACKEND_WORK_DIR: 'backend'
 
 jobs:
   Backend-Build:
