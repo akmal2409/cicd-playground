@@ -17,6 +17,7 @@ jobs:
           distribution: 'temurin'
           java-version: '19'
           cache: maven
+          path: backend
       - name: Package the artefact
         run: mvn -B package -DskipTests --file pom.xml
       - name: Run Unit tests
