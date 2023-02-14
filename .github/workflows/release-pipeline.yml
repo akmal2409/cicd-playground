@@ -111,6 +111,9 @@ jobs:
       - name: Adding Known Hosts
         run: ssh-keyscan -p ${{ secrets.VM_SSH_PORT}} -H ${{ secrets.VM_IP }}  >> ~/.ssh/known_hosts
       
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        
       - name: Copy docker-compose.yaml file 
         run: scp -P ${{ secrets.VM_SSH_PORT }} docker-compose.prod.yaml ${{ secrets.VM_SSH_USER }}@${{ secrets.VM_IP }}:/home/${{ secrets.VM_SSH_USER }}
 
