@@ -94,5 +94,17 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           file: Dockerfile.frontend.prod
 
+  Deploy:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
+      
+      - name: Copy docker-compose.yaml file 
+        run: scp -P ${{ secrets.VM_SSH_PORT }} docker-compose.prod.yaml ${{ secrets.VM_SSH_USER }}@${{ secrets.VM_IP }}:/home/${{ secrets.VM_SSH_USER }}
 
+      - name: Run docker-compose.yaml 
+        run: ssh ${{ secrets.VM_SSH_USER }}@${{ secrets.VM_IP }} -p ${{ secrets.VM_SSH_PORT }} 'cd ~ && docker compose -f docker-compose.prod.yaml up -d'
       
