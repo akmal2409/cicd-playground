@@ -17,7 +17,7 @@ export class AppComponent {
   }
 
   public pollHealth() {
-    this.http.get('http://localhost/api/health')
+    this.http.get('https://bn01.viaware.nl/api/health')
       .subscribe(health => {
         this.health = health;
       });
