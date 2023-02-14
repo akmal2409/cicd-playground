@@ -1,0 +1,26 @@
+services:
+  backend:
+    image: akmalalikhujaev/cicd-backend:latest
+    healthcheck:
+      test: "wget --no-verbose --tries=1 --spider http://backend:8080/health || exit 1"
+      interval: 5s
+      retries: 5
+      timeout: 10s
+    restart: always
+    networks:
+      - internal
+
+  frontend:
+    image: akmalalikhujaev/cicd-frontend:latest
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - internal
+
+
+networks:
+  internal:
+    driver: bridge

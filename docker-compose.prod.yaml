@@ -1,0 +1,30 @@
+services:
+  backend:
+    image: ghcr.io/akmal2409/cicd-backend:latest
+    healthcheck:
+      test: "wget --no-verbose --tries=1 --spider http://backend:8080/health || exit 1"
+      interval: 5s
+      retries: 5
+      timeout: 10s
+    restart: always
+    environment:
+      SERVER_PORT: "8080"
+    networks:
+      - internal
+
+  frontend:
+    image: ghcr.io/akmal2409/cicd-frontend:latest
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    volumes:
+      - "/etc/nginx/ssl:/etc/nginx/ssl"
+    networks:
+      - internal
+
+
+networks:
+  internal:
+    driver: bridge
